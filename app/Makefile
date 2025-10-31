@@ -13,14 +13,14 @@ install-dist:
 
 # Запуск собранного приложения (зависит от install-dist)
 run-dist: install-dist
-	./app/build/install/app/bin/app
+	./build/install/app/bin/app
 
 # Очистка проекта
 clean:
 	./gradlew clean
 
 # Полная пересборка и запуск
-rebuild: clean build install-dist run-dist
+rebuild: build install-dist run-dist
 
 # Только сборка и установка (без запуска)
 dist: build install-dist

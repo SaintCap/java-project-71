@@ -3,12 +3,35 @@
  */
 package hexlet.code;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
+import hexlet.code.gendiff.Differ;
+
+@Command(
+        name = "gendiff",
+        description = "Compares two configuration files and shows a difference.",
+        mixinStandardHelpOptions = true,
+        version = "1.0"
+)
+public class App implements Runnable {
+
+    @Parameters(index="0", paramLabel = "FILE_1", description = "First file to compare")
+    String file1;
+
+    @Parameters(index="1", paramLabel = "FILE_2", description = "Second file to compare")
+    String file2;
+
+    @Override
+    public void run() {
+        System.out.println(Differ.generate(file1, file2));
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        CommandLine cmd = new CommandLine(new App());
+        cmd.setUsageHelpAutoWidth(true);
+        cmd.execute(args);
     }
+
 }

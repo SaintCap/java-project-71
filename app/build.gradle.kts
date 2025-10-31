@@ -23,6 +23,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    implementation("info.picocli:picocli:4.7.7")
+    annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -34,7 +37,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "hexlet.code.App"
+    mainClass.set("hexlet.code.App")
 }
 
 tasks.named<Test>("test") {
