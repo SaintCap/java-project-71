@@ -14,6 +14,14 @@ class AppTest {
         String file1 = "src/test/__fixtures__/file1.json";
         String file2 = "src/test/__fixtures__/file2.json";
 
-        assertNotNull(Differ.generate(file1, file2), "diff should return smth");
+        assertEquals("""
+                        {
+                          - follow: false
+                            host: hexlet.io
+                          - proxy: 123.234.53.22
+                          - timeout: 50
+                          + timeout: 20
+                          + verbose: true
+                        }""", Differ.generate(file1, file2));
     }
 }
