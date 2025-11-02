@@ -8,6 +8,22 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    checkstyle
+    id("org.sonarqube") version "7.0.1.6134"
+}
+
+checkstyle {
+    toolVersion = "10.12.4"
+    configFile = file("checkstyle.xml")
+    isIgnoreFailures = false
+    maxWarnings = 0
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "SaintCap_java-project-71")
+        property("sonar.organization", "saintcap")
+    }
 }
 
 repositories {
@@ -16,17 +32,12 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
-    implementation(libs.guava)
-
     implementation("info.picocli:picocli:4.7.7")
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
+    implementation(libs.guava)
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -42,6 +53,15 @@ application {
 }
 
 tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks {
+    checkstyleMain {
+        dependsOn(compileJava)
+    }
+
+    checkstyleTest {
+        dependsOn(compileTestJava)
+    }
 }
