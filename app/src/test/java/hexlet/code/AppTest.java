@@ -6,9 +6,14 @@ package hexlet.code;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+import hexlet.code.gendiff.Differ;
+
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest, "app should have");
+    @Test void generateDiff() throws Exception {
+        String file1 = "src/test/__fixtures__/file1.json";
+        String file2 = "src/test/__fixtures__/file2.json";
+
+        assertNotNull(Differ.generate(file1, file2), "diff should return smth");
     }
 }

@@ -6,8 +6,11 @@ package hexlet.code;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Option;
 
 import hexlet.code.gendiff.Differ;
+
+import java.nio.file.FileAlreadyExistsException;
 
 @Command(
         name = "gendiff",
@@ -17,15 +20,35 @@ import hexlet.code.gendiff.Differ;
 )
 public class App implements Runnable {
 
-    @Parameters(index="0", paramLabel = "FILE_1", description = "First file to compare")
-    String file1;
+    @Parameters(
+            index="0",
+            paramLabel = "filepath1",
+            description = "path to first file"
+    )
+    private String file1;
 
-    @Parameters(index="1", paramLabel = "FILE_2", description = "Second file to compare")
-    String file2;
+    @Parameters(
+            index="1",
+            paramLabel = "filepath2",
+            description = "path to second file"
+    )
+    private String file2;
+
+    @Option(
+            names = {"-f", "--format"},
+            description = "output format [default: ${DEFAULT-VALUE}]",
+            defaultValue = "stylish",
+            paramLabel = "format"
+    )
+    private String format;
 
     @Override
     public void run() {
-        System.out.println(Differ.generate(file1, file2));
+        try {
+            System.out.println(Differ.generate(file1, file2));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {
