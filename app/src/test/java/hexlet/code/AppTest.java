@@ -10,9 +10,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import hexlet.code.gendiff.Differ;
 
 class AppTest {
-    @Test void generateDiff() throws Exception {
-        String file1 = "src/test/__fixtures__/file1.json";
-        String file2 = "src/test/__fixtures__/file2.json";
+    @Test void generateDiffJson() throws Exception {
+        String file1 = "src/test/resources/file1.json";
+        String file2 = "src/test/resources/file2.json";
+
+        assertEquals("""
+                        {
+                          - follow: false
+                            host: hexlet.io
+                          - proxy: 123.234.53.22
+                          - timeout: 50
+                          + timeout: 20
+                          + verbose: true
+                        }""", Differ.generate(file1, file2));
+    }
+
+    @Test void generateDiffYaml() throws Exception {
+        String file1 = "src/test/resources/file3.yaml";
+        String file2 = "src/test/resources/file4.yaml";
 
         assertEquals("""
                         {
