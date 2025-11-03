@@ -3,3 +3,12 @@
 
 ### Sonar tests and linter status:
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SaintCap_java-project-71&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=SaintCap_java-project-71)
+
+### Demo HELP
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/mFvY4kxd8Sj2OxPiDPfBJeiT0)
+
+### Demo JSON
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/wBoGrQHkas77RxW0lZ5fh7JFj)
+
+### Demo YAML
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/T1WSLgQFhTnfnu7tTeyKoJT3E)

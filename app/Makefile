@@ -20,7 +20,7 @@ clean:
 	./gradlew clean
 
 # Полная пересборка и запуск
-rebuild: build install-dist run-dist
+rebuild: build install-dist
 
 # Только сборка и установка (без запуска)
 dist: build install-dist
