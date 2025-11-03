@@ -13,7 +13,7 @@ import java.util.Map;
 public class Parser {
     private final List<Mapper> parsers  = new ArrayList<>();
 
-    Parser() {
+    public Parser() {
         fileParserRegistry();
     }
 

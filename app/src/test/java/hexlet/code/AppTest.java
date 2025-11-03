@@ -3,11 +3,17 @@
  */
 package hexlet.code;
 
+import hexlet.code.gendiff.Parser;
+import hexlet.code.gendiff.mappers.JSONFileMapper;
+import hexlet.code.gendiff.mappers.YAMLFileMapper;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashMap;
 
 import hexlet.code.gendiff.Differ;
+
+import java.nio.file.Paths;
 
 class AppTest {
     @Test void generateDiffJson() throws Exception {
@@ -39,4 +45,62 @@ class AppTest {
                           + verbose: true
                         }""", Differ.generate(file1, file2));
     }
+
+    @Test void parserJSON() throws Exception {
+        String file1 = "src/test/resources/file1.json";
+
+        var parser = new Parser();
+        var expect = new HashMap<String, Object>();
+        expect.put("host", "hexlet.io");
+        expect.put("timeout", 50);
+        expect.put("proxy", "123.234.53.22");
+        expect.put("follow", false);
+
+        assertEquals(expect, parser.parse(Paths.get(file1).toAbsolutePath(), "json"));
+
+    }
+
+    @Test void parserYAML() throws Exception {
+        String file1 = "src/test/resources/file3.yaml";
+
+        var parser = new Parser();
+        var expect = new HashMap<String, Object>();
+        expect.put("host", "hexlet.io");
+        expect.put("timeout", 50);
+        expect.put("proxy", "123.234.53.22");
+        expect.put("follow", false);
+
+        assertEquals(expect, parser.parse(Paths.get(file1).toAbsolutePath(), "yaml"));
+
+    }
+
+    @Test void mapJSON() throws Exception {
+        String file1 = "src/test/resources/file1.json";
+
+        var mapper = new JSONFileMapper();
+        var expect = new HashMap<String, Object>();
+        expect.put("host", "hexlet.io");
+        expect.put("timeout", 50);
+        expect.put("proxy", "123.234.53.22");
+        expect.put("follow", false);
+
+        assertEquals(expect,
+                        mapper.parse(Paths.get(file1).toAbsolutePath()));
+
+    }
+
+    @Test void mapYAML() throws Exception {
+        String file1 = "src/test/resources/file3.yaml";
+
+        var mapper = new YAMLFileMapper();
+        var expect = new HashMap<String, Object>();
+        expect.put("host", "hexlet.io");
+        expect.put("timeout", 50);
+        expect.put("proxy", "123.234.53.22");
+        expect.put("follow", false);
+
+        assertEquals(expect, mapper.parse(Paths.get(file1).toAbsolutePath()));
+
+    }
+
 }
