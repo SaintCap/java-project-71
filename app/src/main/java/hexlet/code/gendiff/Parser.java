@@ -14,7 +14,7 @@ public class Parser {
     private final List<Mapper> parsers  = new ArrayList<>();
 
     Parser() {
-        FileParserRegistry();
+        fileParserRegistry();
     }
 
     public Map<String, Object> parse(Path file, String extension) throws IOException {
@@ -30,7 +30,7 @@ public class Parser {
                         "Unsupported file format: " + extension));
     }
 
-    private void FileParserRegistry() {
+    private void fileParserRegistry() {
         parsers.add(new JSONFileMapper());
         parsers.add(new YAMLFileMapper());
     }
