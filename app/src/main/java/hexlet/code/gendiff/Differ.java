@@ -1,15 +1,11 @@
 package hexlet.code.gendiff;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.NoSuchFileException;
 import java.util.Map;
 import java.util.HashSet;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.commons.io.FilenameUtils;
 
 public class Differ {
@@ -22,8 +18,10 @@ public class Differ {
         var file1 = getFileInfo(filePath1);
         var file2 = getFileInfo(filePath2);
 
-        var data1 = getData(file1);
-        var data2 = getData(file2);
+        var parser = new Parser();
+
+        var data1 = parser.parse(file1.absolutePath(),file1.ext());
+        var data2 = parser.parse(file2.absolutePath(),file2.ext());
 
         return compareData(data1, data2);
     }
@@ -36,23 +34,6 @@ public class Differ {
         }
 
         return new FileInfo(path.toAbsolutePath(), FilenameUtils.getExtension(file.getName()));
-    }
-
-    private static Map<String, Object> getData(FileInfo file) throws Exception {
-        var content = Files.readString(file.absolutePath());
-        var ext = file.ext();
-
-        if (ext.equals("json")) {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
-        }
-
-        if (ext.equals("yaml")) {
-            ObjectMapper mapper = new YAMLMapper();
-            return mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
-        }
-
-        return Map.of();
     }
 
     private static String compareData(Map<String, Object> data1, Map<String, Object> data2) {
