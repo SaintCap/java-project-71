@@ -12,6 +12,7 @@ import hexlet.code.gendiff.utils.FileInfo;
 import hexlet.code.gendiff.utils.KeyComparisonResult;
 
 public class Differ {
+    private static final String FORMAT = "stylish";
 
     public static String generate(String filePath1, String filePath2, String format) throws Exception {
 
@@ -26,6 +27,21 @@ public class Differ {
         var compareResult = compareData(data1, data2);
 
         return Processor.process(format, compareResult);
+    }
+
+    public static String generate(String filePath1, String filePath2) throws Exception {
+
+        var fileInfo1 = new FileInfo(filePath1);
+        var fileInfo2 = new FileInfo(filePath2);
+
+        var parser = new Parser();
+
+        var data1 = parser.parse(fileInfo1);
+        var data2 = parser.parse(fileInfo2);
+
+        var compareResult = compareData(data1, data2);
+
+        return Processor.process(FORMAT, compareResult);
     }
 
     private static List<KeyComparisonResult> compareData(Map<String, Object> data1, Map<String, Object> data2) {
