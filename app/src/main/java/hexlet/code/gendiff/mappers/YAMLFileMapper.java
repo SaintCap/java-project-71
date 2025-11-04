@@ -13,7 +13,7 @@ public class YAMLFileMapper  implements Mapper {
 
     @Override
     public boolean supports(String ext) {
-        return "yaml".equals(ext);
+        return "yaml".equals(ext) || "yml".equals(ext);
     }
 
     @Override
