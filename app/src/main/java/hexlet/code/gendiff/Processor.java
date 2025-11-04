@@ -1,6 +1,7 @@
 package hexlet.code.gendiff;
 
 import hexlet.code.gendiff.formatters.Formatter;
+import hexlet.code.gendiff.formatters.Json;
 import hexlet.code.gendiff.formatters.Plain;
 import hexlet.code.gendiff.formatters.Stylish;
 import hexlet.code.gendiff.utils.KeyComparisonResult;
@@ -15,6 +16,7 @@ public class Processor {
     static {
         registerFormatter("stylish", new Stylish());
         registerFormatter("plain", new Plain());
+        registerFormatter("json", new Json());
     }
 
     public static void registerFormatter(String type, Formatter formatter) {

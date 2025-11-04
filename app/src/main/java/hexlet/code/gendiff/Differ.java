@@ -47,7 +47,7 @@ public class Differ {
 
             if (inFirst && inSecond) {
 
-                if (Objects.equals(val1, val2)) {
+                if (Objects.deepEquals(val1, val2)) {
 
                     compResult.setIsUnchanged(key, val1);
 

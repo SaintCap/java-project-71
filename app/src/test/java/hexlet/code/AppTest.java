@@ -53,6 +53,16 @@ class AppTest {
         assertEquals(expect.trim(), Differ.generate(file1, file2, "plain"));
     }
 
+    @Test void generateDiffJsonToJson() throws Exception {
+        String file1 = "src/test/resources/file1.json";
+        String file2 = "src/test/resources/file2.json";
+        String expect = """
+                [{"key":"follow","defaultValue":false,"newValue":null,"status":"DELETED"},{"key":"host","defaultValue":"hexlet.io","newValue":null,"status":"UNCHANGED"},{"key":"proxy","defaultValue":"123.234.53.22","newValue":null,"status":"DELETED"},{"key":"timeout","defaultValue":50,"newValue":20,"status":"UPDATED"},{"key":"verbose","defaultValue":null,"newValue":true,"status":"ADDED"}]
+                """;
+
+        assertEquals(expect.trim(), Differ.generate(file1, file2, "json"));
+    }
+
     @Test void generateDiffYamlPlain() throws Exception {
         String file1 = "src/test/resources/file7.yaml";
         String file2 = "src/test/resources/file8.yaml";

@@ -1,6 +1,6 @@
 package hexlet.code.gendiff.utils;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,46 +10,57 @@ public class KeyComparisonResult {
     private String key;
     private Object defaultValue;
     private Object newValue;
-    private int changeStatus;
+    private Status status;
+
+    private enum Status {
+        UNCHANGED,
+        UPDATED,
+        ADDED,
+        DELETED
+    }
 
     public void setIsUnchanged(String key, Object defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
-        this.changeStatus = 0;
+        this.status = Status.UNCHANGED;
     }
 
     public void setIsUpdate(String key, Object defaultValue, Object newValue) {
         this.key = key;
         this.defaultValue = defaultValue;
         this.newValue = newValue;
-        this.changeStatus = 1;
+        this.status = Status.UPDATED;
     }
 
     public void setIsAdd(String key, Object newValue) {
         this.key = key;
         this.newValue = newValue;
-        this.changeStatus = 2;
+        this.status = Status.ADDED;
     }
 
     public void setIsDelete(String key, Object defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
-        this.changeStatus = 3;
+        this.status = Status.DELETED;
     }
 
+    @JsonIgnore
     public boolean isUnchanged() {
-        return changeStatus == 0;
+        return status == Status.UNCHANGED;
     }
 
+    @JsonIgnore
     public boolean isUpdate() {
-        return changeStatus == 1;
+        return status == Status.UPDATED;
     }
 
+    @JsonIgnore
     public boolean isAdd() {
-        return changeStatus == 2;
+        return status == Status.ADDED;
     }
 
+    @JsonIgnore
     public boolean isDelete() {
-        return changeStatus == 3;
+        return status == Status.DELETED;
     }
 }
