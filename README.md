@@ -7,8 +7,17 @@
 ### Demo HELP
 [![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/mFvY4kxd8Sj2OxPiDPfBJeiT0)
 
-### Demo JSON
+### Demo JSON 
 [![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/wBoGrQHkas77RxW0lZ5fh7JFj)
+
+### Demo JSON with nesting
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/9OE16bP4TTVh6OdsjR6HB2kgz)
+
+### Demo JSON Plain
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/Bc8qL0MFXzksTBgwXjVOKkq6X)
 
 ### Demo YAML
 [![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/T1WSLgQFhTnfnu7tTeyKoJT3E)
+
+### Demo YAML Plain
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/nt4uL1LQlNmjf2NwwQU9lSfEz)

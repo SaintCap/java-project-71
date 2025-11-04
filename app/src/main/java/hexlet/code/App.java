@@ -40,7 +40,7 @@ public class App implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println(Differ.generate(file1, file2));
+            System.out.println(Differ.generate(file1, file2, format));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

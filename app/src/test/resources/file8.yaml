@@ -1,0 +1,24 @@
+
+setting1: "Another value"
+setting2: 300
+setting3: "none"
+numbers1: [1, 2, 3, 4]
+numbers2: [22, 33, 44, 55]
+numbers4: [4, 5, 6]
+chars1: ["a", "b", "c"]
+chars2: false
+checked: true
+default: ["value1", "value2"]
+id: null
+key2: "value2"
+obj1:
+  nestedKey: "value"
+  isNested: true
+obj2:
+  nestedKey: "value"
+  isNested: false
+nested_object:
+  inner_key: "modified_value"
+  deep_nested:
+    level: 4
+    new_property: "added"

@@ -1,42 +1,32 @@
 package hexlet.code.gendiff;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.NoSuchFileException;
+import java.util.List;
 import java.util.Map;
 import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Objects;
 
-import org.apache.commons.io.FilenameUtils;
+import hexlet.code.gendiff.utils.FileInfo;
+import hexlet.code.gendiff.utils.KeyComparisonResult;
 
 public class Differ {
 
-    private record FileInfo(Path absolutePath, String ext) {
-    }
+    public static String generate(String filePath1, String filePath2, String format) throws Exception {
 
-    public static String generate(String filePath1, String filePath2) throws Exception {
-
-        var file1 = getFileInfo(filePath1);
-        var file2 = getFileInfo(filePath2);
+        var fileInfo1 = new FileInfo(filePath1);
+        var fileInfo2 = new FileInfo(filePath2);
 
         var parser = new Parser();
 
-        var data1 = parser.parse(file1.absolutePath(),file1.ext());
-        var data2 = parser.parse(file2.absolutePath(),file2.ext());
+        var data1 = parser.parse(fileInfo1);
+        var data2 = parser.parse(fileInfo2);
 
-        return compareData(data1, data2);
+        var compareResult = compareData(data1, data2);
+
+        return Processor.process(format, compareResult);
     }
 
-    private static FileInfo getFileInfo(String filePath) throws NoSuchFileException {
-        var path = Paths.get(filePath);
-        var file = path.toFile();
-        if (!file.exists()) {
-            throw new NoSuchFileException("File not found: " + path.toAbsolutePath());
-        }
-
-        return new FileInfo(path.toAbsolutePath(), FilenameUtils.getExtension(file.getName()));
-    }
-
-    private static String compareData(Map<String, Object> data1, Map<String, Object> data2) {
+    private static List<KeyComparisonResult> compareData(Map<String, Object> data1, Map<String, Object> data2) {
         var keys = new HashSet<>(data1.keySet());
         keys.addAll(data2.keySet());
 
@@ -44,36 +34,44 @@ public class Differ {
                             .sorted()
                             .toList();
 
-        StringBuilder result = new StringBuilder();
+        List<KeyComparisonResult> result = new ArrayList<>();
 
-        result.append("{\n");
         for (String key : keysList) {
-            if (data1.containsKey(key) && data2.containsKey(key)) {
-                var val1 = data1.get(key);
-                var val2 = data2.get(key);
+            var inFirst = data1.containsKey(key);
+            var inSecond = data2.containsKey(key);
 
-                if (val1.equals(val2)) {
-                    result.append(String.format("    %s: %s", key, val1)).append("\n");
-                    continue;
+            var val1 = data1.get(key);
+            var val2 = data2.get(key);
+
+            KeyComparisonResult compResult = new KeyComparisonResult();
+
+            if (inFirst && inSecond) {
+
+                if (Objects.equals(val1, val2)) {
+
+                    compResult.setIsUnchanged(key, val1);
+
+                } else {
+
+                    compResult.setIsUpdate(key, val1, val2);
+
                 }
 
-                result.append(String.format("  - %s: %s", key, val1)).append("\n");
-                result.append(String.format("  + %s: %s", key, val2)).append("\n");
+            } else if (!inSecond) {
 
-            } else if (data1.containsKey(key) && !data2.containsKey(key)) {
+                compResult.setIsDelete(key, val1);
 
-                var val1 = data1.get(key);
-                result.append(String.format("  - %s: %s", key, val1)).append("\n");
+            } else {
 
-            } else if (!data1.containsKey(key) && data2.containsKey(key)) {
-
-                var val2 = data2.get(key);
-                result.append(String.format("  + %s: %s", key, val2)).append("\n");
+                compResult.setIsAdd(key, val2);
 
             }
-        }
-        result.append("}");
 
-        return result.toString();
+            result.add(compResult);
+
+        }
+
+        return result;
     }
+
 }

@@ -3,9 +3,9 @@ package hexlet.code.gendiff;
 import hexlet.code.gendiff.mappers.JSONFileMapper;
 import hexlet.code.gendiff.mappers.Mapper;
 import hexlet.code.gendiff.mappers.YAMLFileMapper;
+import hexlet.code.gendiff.utils.FileInfo;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +17,9 @@ public class Parser {
         fileParserRegistry();
     }
 
-    public Map<String, Object> parse(Path file, String extension) throws IOException {
-        Mapper mapper = getParser(extension);
-        return mapper.parse(file);
+    public Map<String, Object> parse(FileInfo fileInfo) throws IOException {
+        Mapper mapper = getParser(fileInfo.getExt());
+        return mapper.parse(fileInfo.getFilePath());
     }
 
     private Mapper getParser(String extension) throws IOException {

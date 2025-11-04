@@ -18,7 +18,7 @@ public class YAMLFileMapper  implements Mapper {
 
     @Override
     public Map<String, Object> parse(Path file) throws IOException {
-        var content = Files.readString(file.toAbsolutePath());
+        var content = Files.readString(file);
 
         ObjectMapper mapper = new YAMLMapper();
         return mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
