@@ -5,6 +5,9 @@ plugins {
     id("org.sonarqube") version "7.0.1.6134"
 }
 
+group = "hexlet.code"
+version = "1.0.0"
+
 checkstyle {
     toolVersion = "10.12.4"
     configFile = file("checkstyle.xml")
