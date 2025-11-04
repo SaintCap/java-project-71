@@ -49,8 +49,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.42")
     testCompileOnly("org.projectlombok:lombok:1.18.42")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
-    implementation(libs.guava)
-    testImplementation(libs.junit.jupiter)
+    implementation("com.google.guava:guava:32.1.2-jre")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
