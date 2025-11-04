@@ -65,8 +65,10 @@ application {
 }
 
 tasks.named<Test>("test") {
+
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
+
 }
 
 tasks.named("sonar") {
