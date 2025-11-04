@@ -5,8 +5,6 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Option;
 
-import hexlet.code.gendiff.Differ;
-
 @Command(
         name = "gendiff",
         description = "Compares two configuration files and shows a difference.",

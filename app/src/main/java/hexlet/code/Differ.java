@@ -1,4 +1,4 @@
-package hexlet.code.gendiff;
+package hexlet.code;
 
 import java.util.List;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import hexlet.code.gendiff.Parser;
+import hexlet.code.gendiff.Processor;
 import hexlet.code.gendiff.utils.FileInfo;
 import hexlet.code.gendiff.utils.KeyComparisonResult;
 

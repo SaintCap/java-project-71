@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 
-import hexlet.code.gendiff.Differ;
-
 class AppTest {
     @Test void generateDiffJson() throws Exception {
         String file1 = "src/test/resources/file1.json";
