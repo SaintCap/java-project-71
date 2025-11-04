@@ -16,8 +16,14 @@
 ### Demo JSON Plain
 [![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/Bc8qL0MFXzksTBgwXjVOKkq6X)
 
+### Demo JSON in JSON
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/XBD4PcPWqSMOYEn6bnZj5iwPM)
+
 ### Demo YAML
 [![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/T1WSLgQFhTnfnu7tTeyKoJT3E)
 
 ### Demo YAML Plain
 [![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/nt4uL1LQlNmjf2NwwQU9lSfEz)
+
+### Demo YAML in JSON
+[![ASCII Cast](https://asciinema.org/a/your-cast-id.svg)](https://asciinema.org/a/QSnQfZDc3AyniM9ciqwU7EMoQ)
