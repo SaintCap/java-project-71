@@ -1,7 +1,6 @@
 plugins {
     application
     checkstyle
-    jacoco
     id("org.sonarqube") version "7.0.1.6134"
 }
 
@@ -12,26 +11,12 @@ checkstyle {
     maxWarnings = 0
 }
 
-jacoco {
-    toolVersion = "0.8.14" // Укажите версию JaCoCo
-}
 
-tasks.jacocoTestReport {
-    dependsOn(tasks.test) // Запускать после тестов
-    reports {
-        xml.required.set(true)
-    }
-}
 
 sonar {
     properties {
         property("sonar.projectKey", "SaintCap_java-project-71")
         property("sonar.organization", "saintcap")
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
-        property("sonar.java.checkstyle.reportPaths", "build/reports/checkstyle/main.xml")
-        property("sonar.junit.reportPaths", "build/test-results/test")
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.java.binaries", "build/classes")
     }
 }
 
