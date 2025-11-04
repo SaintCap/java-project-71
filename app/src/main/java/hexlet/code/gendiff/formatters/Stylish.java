@@ -4,7 +4,7 @@ import hexlet.code.gendiff.utils.KeyComparisonResult;
 
 import java.util.List;
 
-public class Stylish implements Formatter{
+public class Stylish implements Formatter {
     private static final String UNCHANGED = " ";
     private static final String ADD = "+";
     private static final String DELETE = "-";

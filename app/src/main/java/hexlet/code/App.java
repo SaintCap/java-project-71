@@ -14,14 +14,14 @@ import picocli.CommandLine.Option;
 public class App implements Runnable {
 
     @Parameters(
-            index="0",
+            index = "0",
             paramLabel = "filepath1",
             description = "path to first file"
     )
     private String file1;
 
     @Parameters(
-            index="1",
+            index = "1",
             paramLabel = "filepath2",
             description = "path to second file"
     )

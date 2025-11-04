@@ -51,11 +51,15 @@ class AppTest {
     @Test void generateDiffJsonToJson() throws Exception {
         String file1 = "src/test/resources/file1.json";
         String file2 = "src/test/resources/file2.json";
-        String expect = """
-                [{"key":"follow","defaultValue":false,"newValue":null,"status":"DELETED"},{"key":"host","defaultValue":"hexlet.io","newValue":null,"status":"UNCHANGED"},{"key":"proxy","defaultValue":"123.234.53.22","newValue":null,"status":"DELETED"},{"key":"timeout","defaultValue":50,"newValue":20,"status":"UPDATED"},{"key":"verbose","defaultValue":null,"newValue":true,"status":"ADDED"}]
-                """;
+        String jsonString = "["
+                + "{\"key\":\"follow\",\"defaultValue\":false,\"newValue\":null,\"status\":\"DELETED\"},"
+                + "{\"key\":\"host\",\"defaultValue\":\"hexlet.io\",\"newValue\":null,\"status\":\"UNCHANGED\"},"
+                + "{\"key\":\"proxy\",\"defaultValue\":\"123.234.53.22\",\"newValue\":null,\"status\":\"DELETED\"},"
+                + "{\"key\":\"timeout\",\"defaultValue\":50,\"newValue\":20,\"status\":\"UPDATED\"},"
+                + "{\"key\":\"verbose\",\"defaultValue\":null,\"newValue\":true,\"status\":\"ADDED\"}"
+                + "]";
 
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "json"));
+        assertEquals(jsonString.trim(), Differ.generate(file1, file2, "json"));
     }
 
     @Test void generateDiffYamlPlain() throws Exception {
@@ -167,11 +171,11 @@ class AppTest {
 
     @Test void parserJSON() throws Exception {
         String file1 = "src/test/resources/file1.json";
-
+        var timeout = 50;
         var parser = new Parser();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", 50);
+        expect.put("timeout", timeout);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
@@ -182,10 +186,11 @@ class AppTest {
     @Test void parserYAML() throws Exception {
         String file1 = "src/test/resources/file3.yaml";
 
+        var timeout = 50;
         var parser = new Parser();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", 50);
+        expect.put("timeout", timeout);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
@@ -197,10 +202,11 @@ class AppTest {
         String file1 = "src/test/resources/file1.json";
         var fInfo = new FileInfo(file1);
 
+        var timeout = 50;
         var mapper = new JSONFileMapper();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", 50);
+        expect.put("timeout", timeout);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
@@ -212,10 +218,11 @@ class AppTest {
         String file1 = "src/test/resources/file3.yaml";
         var fInfo = new FileInfo(file1);
 
+        var timeout = 50;
         var mapper = new YAMLFileMapper();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", 50);
+        expect.put("timeout", timeout);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 

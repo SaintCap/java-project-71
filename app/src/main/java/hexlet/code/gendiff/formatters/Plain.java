@@ -18,14 +18,17 @@ public class Plain implements Formatter {
             }
 
             var basicString = keyFormatString(compResult.getKey());
+            var defaultValue = compResult.getDefaultValue();
+            var newValue = compResult.getNewValue();
 
             if (compResult.isUpdate()) {
-                result.append(updatedFormatString(basicString, compResult.getDefaultValue(), compResult.getNewValue())).append("\n");
+                var resultString = updatedFormatString(basicString,defaultValue,newValue);
+                result.append(resultString).append("\n");
                 continue;
             }
 
             if (compResult.isAdd()) {
-                result.append(addFormatString(basicString, compResult.getNewValue())).append("\n");
+                result.append(addFormatString(basicString, newValue)).append("\n");
                 continue;
             }
 

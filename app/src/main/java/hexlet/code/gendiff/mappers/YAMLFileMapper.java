@@ -21,6 +21,6 @@ public class YAMLFileMapper  implements Mapper {
         var content = Files.readString(file);
 
         ObjectMapper mapper = new YAMLMapper();
-        return mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
+        return mapper.readValue(content, new TypeReference<Map<String, Object>>() { });
     }
 }

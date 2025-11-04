@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class JSONFileMapper implements Mapper{
+public class JSONFileMapper implements Mapper {
 
     @Override
     public boolean supports(String ext) {
@@ -20,6 +20,6 @@ public class JSONFileMapper implements Mapper{
         var content = Files.readString(file);
 
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
+        return mapper.readValue(content, new TypeReference<Map<String, Object>>() { });
     }
 }
