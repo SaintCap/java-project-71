@@ -22,7 +22,7 @@ public class Plain implements Formatter {
             var newValue = compResult.getNewValue();
 
             if (compResult.isUpdate()) {
-                var resultString = updatedFormatString(basicString,defaultValue,newValue);
+                var resultString = updatedFormatString(basicString, defaultValue, newValue);
                 result.append(resultString).append("\n");
                 continue;
             }

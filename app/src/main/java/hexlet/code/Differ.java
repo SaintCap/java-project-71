@@ -14,6 +14,19 @@ import hexlet.code.gendiff.utils.KeyComparisonResult;
 public class Differ {
     private static final String FORMAT = "stylish";
 
+    /**
+     * Generates a formatted comparison report by processing and comparing data from two files.
+     * The method reads the files, parses their contents, performs a comparison, and returns
+     * the result in the specified format.
+     *
+     * @param filePath1 the path to the first file for comparison
+     * @param filePath2 the path to the second file for comparison
+     * @param format the desired output format for the comparison result (e.g., "json", "stylish", "plain")
+     * @return a string containing the comparison result in the requested format
+     * @throws Exception if file reading, parsing, or processing fails
+     * @see Parser
+     * @see Processor
+     */
     public static String generate(String filePath1, String filePath2, String format) throws Exception {
 
         var fileInfo1 = new FileInfo(filePath1);
@@ -29,6 +42,18 @@ public class Differ {
         return Processor.process(format, compareResult);
     }
 
+    /**
+     * Generates a formatted comparison report by processing and comparing data from two files.
+     * The method reads the files, parses their contents, performs a comparison, and returns
+     * the result in the specified format.
+     *
+     * @param filePath1 the path to the first file for comparison
+     * @param filePath2 the path to the second file for comparison
+     * @return a string containing the comparison result in the requested format
+     * @throws Exception if file reading, parsing, or processing fails
+     * @see Parser
+     * @see Processor
+     */
     public static String generate(String filePath1, String filePath2) throws Exception {
 
         var fileInfo1 = new FileInfo(filePath1);

@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 
 class AppTest {
+    public static final int TIMEOUT = 50;
+
     @Test void generateDiffJson() throws Exception {
         String file1 = "src/test/resources/file1.json";
         String file2 = "src/test/resources/file2.json";
@@ -171,11 +173,11 @@ class AppTest {
 
     @Test void parserJSON() throws Exception {
         String file1 = "src/test/resources/file1.json";
-        var timeout = 50;
+
         var parser = new Parser();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", timeout);
+        expect.put("timeout", TIMEOUT);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
@@ -186,11 +188,10 @@ class AppTest {
     @Test void parserYAML() throws Exception {
         String file1 = "src/test/resources/file3.yaml";
 
-        var timeout = 50;
         var parser = new Parser();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", timeout);
+        expect.put("timeout", TIMEOUT);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
@@ -202,11 +203,10 @@ class AppTest {
         String file1 = "src/test/resources/file1.json";
         var fInfo = new FileInfo(file1);
 
-        var timeout = 50;
         var mapper = new JSONFileMapper();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", timeout);
+        expect.put("timeout", TIMEOUT);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
@@ -218,11 +218,10 @@ class AppTest {
         String file1 = "src/test/resources/file3.yaml";
         var fInfo = new FileInfo(file1);
 
-        var timeout = 50;
         var mapper = new YAMLFileMapper();
         var expect = new HashMap<String, Object>();
         expect.put("host", "hexlet.io");
-        expect.put("timeout", timeout);
+        expect.put("timeout", TIMEOUT);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 

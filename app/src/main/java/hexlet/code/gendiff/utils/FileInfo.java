@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Getter
-public class FileInfo {
+public final class FileInfo {
     private final Path filePath;
     private final String ext;
     
