@@ -5,7 +5,7 @@ import hexlet.code.gendiff.utils.KeyComparisonResult;
 
 import java.util.List;
 
-public class Json implements Formatter {
+public final class Json implements Formatter {
 
     @Override
     public String format(List<KeyComparisonResult> diff) {

@@ -11,7 +11,7 @@ import picocli.CommandLine.Option;
         mixinStandardHelpOptions = true,
         version = "1.0"
 )
-public class App implements Runnable {
+public final class App implements Runnable {
 
     @Parameters(
             index = "0",

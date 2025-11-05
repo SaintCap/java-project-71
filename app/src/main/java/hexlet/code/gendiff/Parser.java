@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Parser {
+public final class Parser {
     private final List<Mapper> parsers  = new ArrayList<>();
 
     public Parser() {

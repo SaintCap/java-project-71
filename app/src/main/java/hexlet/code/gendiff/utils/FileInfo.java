@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 public final class FileInfo {
     private final Path filePath;
     private final String ext;
-    
     public FileInfo(String path) throws NoSuchFileException {
 
         filePath = Paths.get(path).toAbsolutePath();

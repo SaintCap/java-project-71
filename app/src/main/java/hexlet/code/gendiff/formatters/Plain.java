@@ -4,7 +4,7 @@ import hexlet.code.gendiff.utils.KeyComparisonResult;
 
 import java.util.List;
 
-public class Plain implements Formatter {
+public final class Plain implements Formatter {
 
     @Override
     public String format(List<KeyComparisonResult> diff) {
