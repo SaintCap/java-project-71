@@ -28,6 +28,22 @@ class AppTest {
         assertEquals(expect.trim(), Differ.generate(file1, file2, "stylish"));
     }
 
+    @Test void generateDiffJsonStylishDefault() throws Exception {
+        String file1 = "src/test/resources/file1.json";
+        String file2 = "src/test/resources/file2.json";
+        String expect = """
+                        {
+                          - follow: false
+                            host: hexlet.io
+                          - proxy: 123.234.53.22
+                          - timeout: 50
+                          + timeout: 20
+                          + verbose: true
+                        }""";
+
+        assertEquals(expect.trim(), Differ.generate(file1, file2));
+    }
+
     @Test void generateDiffJsonPlain() throws Exception {
         String file1 = "src/test/resources/file5.json";
         String file2 = "src/test/resources/file6.json";
@@ -169,6 +185,20 @@ class AppTest {
                       + setting3: none
                     }""";
         assertEquals(expect.trim(), Differ.generate(file1, file2, "stylish"));
+    }
+
+    @Test void generateDiffYamlToJson() throws Exception {
+        String file1 = "src/test/resources/file3.yaml";
+        String file2 = "src/test/resources/file4.yaml";
+        String jsonString = "["
+                + "{\"key\":\"follow\",\"defaultValue\":false,\"newValue\":null,\"status\":\"DELETED\"},"
+                + "{\"key\":\"host\",\"defaultValue\":\"hexlet.io\",\"newValue\":null,\"status\":\"UNCHANGED\"},"
+                + "{\"key\":\"proxy\",\"defaultValue\":\"123.234.53.22\",\"newValue\":null,\"status\":\"DELETED\"},"
+                + "{\"key\":\"timeout\",\"defaultValue\":50,\"newValue\":20,\"status\":\"UPDATED\"},"
+                + "{\"key\":\"verbose\",\"defaultValue\":null,\"newValue\":true,\"status\":\"ADDED\"}"
+                + "]";
+
+        assertEquals(jsonString.trim(), Differ.generate(file1, file2, "json"));
     }
 
     @Test void parserJSON() throws Exception {
