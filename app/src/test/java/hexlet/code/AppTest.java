@@ -2,261 +2,156 @@ package hexlet.code;
 
 import hexlet.code.gendiff.Parser;
 import hexlet.code.gendiff.mappers.JSONFileMapper;
+import hexlet.code.gendiff.mappers.Mapper;
 import hexlet.code.gendiff.mappers.YAMLFileMapper;
 import hexlet.code.gendiff.utils.FileInfo;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
 class AppTest {
     public static final int TIMEOUT = 50;
+    public static final String FILE1 = "src/test/resources/file1.json";
+    public static final String FILE2 = "src/test/resources/file2.json";
+    public static final String FILE3 = "src/test/resources/file3.yaml";
+    public static final String FILE4 = "src/test/resources/file4.yaml";
+    public static final String FILE5 = "src/test/resources/file5.json";
+    public static final String FILE6 = "src/test/resources/file6.json";
+    public static final String FILE7 = "src/test/resources/file7.yaml";
+    public static final String FILE8 = "src/test/resources/file8.yaml";
 
-    @Test void generateDiffJson() throws Exception {
-        String file1 = "src/test/resources/file1.json";
-        String file2 = "src/test/resources/file2.json";
-        String expect = """
-                        {
-                          - follow: false
-                            host: hexlet.io
-                          - proxy: 123.234.53.22
-                          - timeout: 50
-                          + timeout: 20
-                          + verbose: true
-                        }""";
-
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "stylish"));
+    @ParameterizedTest
+    @MethodSource("provideTestDataBasic")
+    void generateDiffJson(String file1, String file2, String format, String expect) throws Exception {
+        var actual = Differ.generate(file1, file2, format);
+        assertEquals(expect, actual);
     }
 
-    @Test void generateDiffJsonStylishDefault() throws Exception {
-        String file1 = "src/test/resources/file1.json";
-        String file2 = "src/test/resources/file2.json";
-        String expect = """
-                        {
-                          - follow: false
-                            host: hexlet.io
-                          - proxy: 123.234.53.22
-                          - timeout: 50
-                          + timeout: 20
-                          + verbose: true
-                        }""";
-
-        assertEquals(expect.trim(), Differ.generate(file1, file2));
+    @ParameterizedTest
+    @MethodSource("provideTestDataBasicWithoutFormat")
+    void generateDiffJsonStylishDefault(String file1, String file2, String expect) throws Exception {
+        var actual = Differ.generate(file1, file2);
+        assertEquals(expect, actual);
     }
 
-    @Test void generateDiffJsonPlain() throws Exception {
-        String file1 = "src/test/resources/file5.json";
-        String file2 = "src/test/resources/file6.json";
-        String expect = """
-                        Property 'chars2' was updated. From [complex value] to false
-                        Property 'checked' was updated. From false to true
-                        Property 'default' was updated. From null to [complex value]
-                        Property 'id' was updated. From 45 to null
-                        Property 'key1' was removed
-                        Property 'key2' was added with value: 'value2'
-                        Property 'numbers2' was updated. From [complex value] to [complex value]
-                        Property 'numbers3' was removed
-                        Property 'numbers4' was added with value: [complex value]
-                        Property 'obj1' was added with value: [complex value]
-                        Property 'setting1' was updated. From 'Some value' to 'Another value'
-                        Property 'setting2' was updated. From 200 to 300
-                        Property 'setting3' was updated. From true to 'none'
-                        """;
-
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "plain"));
-    }
-
-    @Test void generateDiffJsonToJson() throws Exception {
-        String file1 = "src/test/resources/file1.json";
-        String file2 = "src/test/resources/file2.json";
-        String jsonString = "["
-                + "{\"key\":\"follow\",\"defaultValue\":false,\"newValue\":null,\"status\":\"DELETED\"},"
-                + "{\"key\":\"host\",\"defaultValue\":\"hexlet.io\",\"newValue\":null,\"status\":\"UNCHANGED\"},"
-                + "{\"key\":\"proxy\",\"defaultValue\":\"123.234.53.22\",\"newValue\":null,\"status\":\"DELETED\"},"
-                + "{\"key\":\"timeout\",\"defaultValue\":50,\"newValue\":20,\"status\":\"UPDATED\"},"
-                + "{\"key\":\"verbose\",\"defaultValue\":null,\"newValue\":true,\"status\":\"ADDED\"}"
-                + "]";
-
-        assertEquals(jsonString.trim(), Differ.generate(file1, file2, "json"));
-    }
-
-    @Test void generateDiffYamlPlain() throws Exception {
-        String file1 = "src/test/resources/file7.yaml";
-        String file2 = "src/test/resources/file8.yaml";
-        String expect = """
-                        Property 'chars2' was updated. From [complex value] to false
-                        Property 'checked' was updated. From false to true
-                        Property 'default' was updated. From null to [complex value]
-                        Property 'id' was updated. From 45 to null
-                        Property 'key1' was removed
-                        Property 'key2' was added with value: 'value2'
-                        Property 'nested_object' was updated. From [complex value] to [complex value]
-                        Property 'numbers2' was updated. From [complex value] to [complex value]
-                        Property 'numbers3' was removed
-                        Property 'numbers4' was added with value: [complex value]
-                        Property 'obj1' was added with value: [complex value]
-                        Property 'setting1' was updated. From 'Some value' to 'Another value'
-                        Property 'setting2' was updated. From 200 to 300
-                        Property 'setting3' was updated. From true to 'none'
-                        """;
-
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "plain"));
-    }
-
-    @Test void generateDiffJsonWithNesting() throws Exception {
-        String file1 = "src/test/resources/file5.json";
-        String file2 = "src/test/resources/file6.json";
-        String expect = """
-                    {
-                        chars1: [a, b, c]
-                      - chars2: [d, e, f]
-                      + chars2: false
-                      - checked: false
-                      + checked: true
-                      - default: null
-                      + default: [value1, value2]
-                      - id: 45
-                      + id: null
-                      - key1: value1
-                      + key2: value2
-                        numbers1: [1, 2, 3, 4]
-                      - numbers2: [2, 3, 4, 5]
-                      + numbers2: [22, 33, 44, 55]
-                      - numbers3: [3, 4, 5]
-                      + numbers4: [4, 5, 6]
-                      + obj1: {nestedKey=value, isNested=true}
-                      - setting1: Some value
-                      + setting1: Another value
-                      - setting2: 200
-                      + setting2: 300
-                      - setting3: true
-                      + setting3: none
-                    }""";
-
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "stylish"));
-    }
-
-    @Test void generateDiffYaml() throws Exception {
-        String file1 = "src/test/resources/file3.yaml";
-        String file2 = "src/test/resources/file4.yaml";
-        String expect = """
-                        {
-                          - follow: false
-                            host: hexlet.io
-                          - proxy: 123.234.53.22
-                          - timeout: 50
-                          + timeout: 20
-                          + verbose: true
-                        }""";
-
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "stylish"));
-    }
-
-    @Test void generateDiffYamlWithNesting() throws Exception {
-        String file1 = "src/test/resources/file7.yaml";
-        String file2 = "src/test/resources/file8.yaml";
-        String expect = """
-                    {
-                        chars1: [a, b, c]
-                      - chars2: [d, e, f]
-                      + chars2: false
-                      - checked: false
-                      + checked: true
-                      - default: null
-                      + default: [value1, value2]
-                      - id: 45
-                      + id: null
-                      - key1: value1
-                      + key2: value2
-                      - nested_object: {inner_key=inner_value, deep_nested={level=3, items=[x, y, z]}}
-                      + nested_object: {inner_key=modified_value, deep_nested={level=4, new_property=added}}
-                        numbers1: [1, 2, 3, 4]
-                      - numbers2: [2, 3, 4, 5]
-                      + numbers2: [22, 33, 44, 55]
-                      - numbers3: [3, 4, 5]
-                      + numbers4: [4, 5, 6]
-                      + obj1: {nestedKey=value, isNested=true}
-                        obj2: {nestedKey=value, isNested=false}
-                      - setting1: Some value
-                      + setting1: Another value
-                      - setting2: 200
-                      + setting2: 300
-                      - setting3: true
-                      + setting3: none
-                    }""";
-        assertEquals(expect.trim(), Differ.generate(file1, file2, "stylish"));
-    }
-
-    @Test void generateDiffYamlToJson() throws Exception {
-        String file1 = "src/test/resources/file3.yaml";
-        String file2 = "src/test/resources/file4.yaml";
-        String jsonString = "["
-                + "{\"key\":\"follow\",\"defaultValue\":false,\"newValue\":null,\"status\":\"DELETED\"},"
-                + "{\"key\":\"host\",\"defaultValue\":\"hexlet.io\",\"newValue\":null,\"status\":\"UNCHANGED\"},"
-                + "{\"key\":\"proxy\",\"defaultValue\":\"123.234.53.22\",\"newValue\":null,\"status\":\"DELETED\"},"
-                + "{\"key\":\"timeout\",\"defaultValue\":50,\"newValue\":20,\"status\":\"UPDATED\"},"
-                + "{\"key\":\"verbose\",\"defaultValue\":null,\"newValue\":true,\"status\":\"ADDED\"}"
-                + "]";
-
-        assertEquals(jsonString.trim(), Differ.generate(file1, file2, "json"));
-    }
-
-    @Test void parserJSON() throws Exception {
-        String file1 = "src/test/resources/file1.json";
-
+    @ParameterizedTest
+    @MethodSource("provideTestDataParser")
+    void testParser(String file, Map<String, Object> expect) throws Exception {
         var parser = new Parser();
+        var fileInfo = new FileInfo(file);
+        var actual = parser.parse(fileInfo);
+
+        assertEquals(expect, actual);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTestDataMapper")
+    void testMappers(String file, Mapper mapper, Map<String, Object> expect) throws Exception {
+        var fileInfo = new FileInfo(file);
+        var actual = mapper.parse(fileInfo.getFilePath());
+
+        assertEquals(expect, actual);
+    }
+
+    private static Stream<Arguments> provideTestDataBasic() throws IOException {
+        return Stream.of(
+                Arguments.of(FILE1,
+                        FILE2,
+                        "stylish",
+                        getTestString("src/test/resources/expected_basic_stylish")
+                ),
+                Arguments.of(FILE5,
+                        FILE6,
+                        "plain",
+                        getTestString("src/test/resources/expected_additionally_plain")
+                ),
+                Arguments.of(FILE1,
+                        FILE2,
+                        "json",
+                        getTestString("src/test/resources/expected_basic_json")
+                ),
+                Arguments.of(FILE7,
+                        FILE8,
+                        "plain",
+                        getTestString("src/test/resources/expected_additionally_yaml_plain")
+                ),
+                Arguments.of(FILE5,
+                        FILE6,
+                        "stylish",
+                        getTestString("src/test/resources/expected_additionally_stylish")
+                ),
+                Arguments.of(FILE3,
+                        FILE4,
+                        "stylish",
+                        getTestString("src/test/resources/expected_basic_stylish")
+                ),
+                Arguments.of(FILE7,
+                        FILE8,
+                        "stylish",
+                        getTestString("src/test/resources/expected_additionally_yaml_stylish")
+                ),
+                Arguments.of(FILE3,
+                        FILE4,
+                        "json",
+                        getTestString("src/test/resources/expected_basic_json")
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestDataBasicWithoutFormat() throws IOException {
+        return Stream.of(
+                Arguments.of(FILE1,
+                        FILE2,
+                        getTestString("src/test/resources/expected_basic_stylish")
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestDataParser() throws IOException {
+        return Stream.of(
+                Arguments.of(FILE1,
+                        testParseResult()
+                ),
+                Arguments.of(FILE3,
+                        testParseResult()
+                )
+        );
+    }
+
+    private static Stream<Arguments> provideTestDataMapper() throws IOException {
+        return Stream.of(
+                Arguments.of(FILE1,
+                        new JSONFileMapper(),
+                        testParseResult()
+                ),
+                Arguments.of(FILE3,
+                        new YAMLFileMapper(),
+                        testParseResult()
+                )
+        );
+    }
+
+    private static Map<String, Object> testParseResult() {
         var expect = new HashMap<String, Object>();
+
         expect.put("host", "hexlet.io");
         expect.put("timeout", TIMEOUT);
         expect.put("proxy", "123.234.53.22");
         expect.put("follow", false);
 
-        assertEquals(expect, parser.parse(new FileInfo(file1)));
-
+        return expect;
     }
 
-    @Test void parserYAML() throws Exception {
-        String file1 = "src/test/resources/file3.yaml";
-
-        var parser = new Parser();
-        var expect = new HashMap<String, Object>();
-        expect.put("host", "hexlet.io");
-        expect.put("timeout", TIMEOUT);
-        expect.put("proxy", "123.234.53.22");
-        expect.put("follow", false);
-
-        assertEquals(expect, parser.parse(new FileInfo(file1)));
-
+    private static String getTestString(String path) throws IOException {
+        return Files.readString(Path.of(path)).trim().replace("\r", "");
     }
-
-    @Test void mapJSON() throws Exception {
-        String file1 = "src/test/resources/file1.json";
-        var fInfo = new FileInfo(file1);
-
-        var mapper = new JSONFileMapper();
-        var expect = new HashMap<String, Object>();
-        expect.put("host", "hexlet.io");
-        expect.put("timeout", TIMEOUT);
-        expect.put("proxy", "123.234.53.22");
-        expect.put("follow", false);
-
-        assertEquals(expect, mapper.parse(fInfo.getFilePath()));
-
-    }
-
-    @Test void mapYAML() throws Exception {
-        String file1 = "src/test/resources/file3.yaml";
-        var fInfo = new FileInfo(file1);
-
-        var mapper = new YAMLFileMapper();
-        var expect = new HashMap<String, Object>();
-        expect.put("host", "hexlet.io");
-        expect.put("timeout", TIMEOUT);
-        expect.put("proxy", "123.234.53.22");
-        expect.put("follow", false);
-
-        assertEquals(expect, mapper.parse(fInfo.getFilePath()));
-
-    }
-
 }

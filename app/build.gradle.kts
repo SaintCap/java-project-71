@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.guava)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:6.0.1")
 }
 
 java {

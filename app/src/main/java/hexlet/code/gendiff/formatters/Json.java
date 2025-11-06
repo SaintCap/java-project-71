@@ -15,7 +15,7 @@ public final class Json implements Formatter {
         var result = "";
 
         try {
-            result = objectMapper.writeValueAsString(diff);
+            result = objectMapper.writeValueAsString(diff).trim();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
