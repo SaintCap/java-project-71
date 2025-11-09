@@ -1,4 +1,4 @@
-package hexlet.code.gendiff.formatters;
+package hexlet.code.formatters;
 
 public class FormatterFactory {
     public static Formatter create(String format) {

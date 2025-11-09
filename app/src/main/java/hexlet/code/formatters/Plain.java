@@ -1,6 +1,6 @@
-package hexlet.code.gendiff.formatters;
+package hexlet.code.formatters;
 
-import hexlet.code.gendiff.utils.KeyComparisonResult;
+import hexlet.code.utils.KeyComparisonResult;
 
 import java.util.List;
 

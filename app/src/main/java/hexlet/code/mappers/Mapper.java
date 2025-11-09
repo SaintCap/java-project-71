@@ -1,4 +1,4 @@
-package hexlet.code.gendiff.mappers;
+package hexlet.code.mappers;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -1,4 +1,4 @@
-package hexlet.code.gendiff.utils;
+package hexlet.code.utils;
 
 import lombok.Getter;
 import org.apache.commons.io.FilenameUtils;

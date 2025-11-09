@@ -1,4 +1,4 @@
-package hexlet.code.gendiff.utils;
+package hexlet.code.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

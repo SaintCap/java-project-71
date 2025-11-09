@@ -1,25 +1,26 @@
-package hexlet.code.gendiff.mappers;
+package hexlet.code.mappers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
-public final class JSONFileMapper implements Mapper {
+public final class YAMLFileMapper  implements Mapper {
 
     /**
      * Checks if this parser supports the given file extension.
      * The parser specifically supports JSON files.
      *
-     * @param ext the file extension to check (without the dot, e.g. "json", "yml")
+     * @param ext the file extension to check (without the dot, e.g. "json", "yml", "yaml")
      * @return true if the extension is "json", false otherwise
      */
     @Override
     public boolean supports(String ext) {
-        return "json".equals(ext);
+        return "yaml".equals(ext) || "yml".equals(ext);
     }
 
     /**
@@ -38,7 +39,7 @@ public final class JSONFileMapper implements Mapper {
     public Map<String, Object> parse(Path file) throws IOException {
         var content = Files.readString(file);
 
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new YAMLMapper();
         return mapper.readValue(content, new TypeReference<Map<String, Object>>() { });
     }
 }

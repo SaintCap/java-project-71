@@ -1,4 +1,4 @@
-package hexlet.code.gendiff;
+package hexlet.code;
 
 import java.util.List;
 import java.util.Map;
@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import hexlet.code.gendiff.formatters.FormatterFactory;
-import hexlet.code.gendiff.utils.FileInfo;
-import hexlet.code.gendiff.utils.KeyComparisonResult;
+import hexlet.code.formatters.FormatterFactory;
+import hexlet.code.utils.FileInfo;
+import hexlet.code.utils.KeyComparisonResult;
 
 public class Differ {
     private static final String STYLISH_FORMAT = "stylish";

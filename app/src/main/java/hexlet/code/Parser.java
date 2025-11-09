@@ -1,9 +1,9 @@
-package hexlet.code.gendiff;
+package hexlet.code;
 
-import hexlet.code.gendiff.mappers.JSONFileMapper;
-import hexlet.code.gendiff.mappers.Mapper;
-import hexlet.code.gendiff.mappers.YAMLFileMapper;
-import hexlet.code.gendiff.utils.FileInfo;
+import hexlet.code.mappers.JSONFileMapper;
+import hexlet.code.mappers.Mapper;
+import hexlet.code.mappers.YAMLFileMapper;
+import hexlet.code.utils.FileInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,11 +1,9 @@
 package hexlet.code;
 
-import hexlet.code.gendiff.Differ;
-import hexlet.code.gendiff.Parser;
-import hexlet.code.gendiff.mappers.JSONFileMapper;
-import hexlet.code.gendiff.mappers.Mapper;
-import hexlet.code.gendiff.mappers.YAMLFileMapper;
-import hexlet.code.gendiff.utils.FileInfo;
+import hexlet.code.mappers.JSONFileMapper;
+import hexlet.code.mappers.Mapper;
+import hexlet.code.mappers.YAMLFileMapper;
+import hexlet.code.utils.FileInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

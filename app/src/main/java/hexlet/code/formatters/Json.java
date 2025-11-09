@@ -1,7 +1,7 @@
-package hexlet.code.gendiff.formatters;
+package hexlet.code.formatters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.gendiff.utils.KeyComparisonResult;
+import hexlet.code.utils.KeyComparisonResult;
 
 import java.util.List;
 
