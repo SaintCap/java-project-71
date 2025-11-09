@@ -39,7 +39,7 @@ jobs:
 
       - name: Build with tests and coverage
         working-directory: ./app
-        run: ./gradlew test jacocoTestReport --info
+        run: ./gradlew build jacocoTestReport --info
 
       - name: Push to Sonar
         env:
