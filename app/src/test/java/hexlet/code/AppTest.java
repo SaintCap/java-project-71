@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.gendiff.Differ;
 import hexlet.code.gendiff.Parser;
 import hexlet.code.gendiff.mappers.JSONFileMapper;
 import hexlet.code.gendiff.mappers.Mapper;
@@ -31,16 +32,18 @@ class AppTest {
 
     @ParameterizedTest
     @MethodSource("provideTestDataBasic")
-    void generateDiffJson(String file1, String file2, String format, String expect) throws Exception {
+    void generateDiffJson(String file1, String file2, String format, String expectedFilePath) throws Exception {
         var actual = Differ.generate(file1, file2, format);
-        assertEquals(expect, actual);
+        var expected = getTestString(expectedFilePath);
+        assertEquals(expected, actual);
     }
 
     @ParameterizedTest
     @MethodSource("provideTestDataBasicWithoutFormat")
-    void generateDiffJsonStylishDefault(String file1, String file2, String expect) throws Exception {
+    void generateDiffJsonStylishDefault(String file1, String file2, String expectedFilePath) throws Exception {
         var actual = Differ.generate(file1, file2);
-        assertEquals(expect, actual);
+        var expected = getTestString(expectedFilePath);
+        assertEquals(expected, actual);
     }
 
     @ParameterizedTest
@@ -67,42 +70,42 @@ class AppTest {
                 Arguments.of(FILE1,
                         FILE2,
                         "stylish",
-                        getTestString("src/test/resources/expected_basic_stylish")
+                        "src/test/resources/expected_basic_stylish"
                 ),
                 Arguments.of(FILE5,
                         FILE6,
                         "plain",
-                        getTestString("src/test/resources/expected_additionally_plain")
+                        "src/test/resources/expected_additionally_plain"
                 ),
                 Arguments.of(FILE1,
                         FILE2,
                         "json",
-                        getTestString("src/test/resources/expected_basic_json")
+                        "src/test/resources/expected_basic_json"
                 ),
                 Arguments.of(FILE7,
                         FILE8,
                         "plain",
-                        getTestString("src/test/resources/expected_additionally_yaml_plain")
+                        "src/test/resources/expected_additionally_yaml_plain"
                 ),
                 Arguments.of(FILE5,
                         FILE6,
                         "stylish",
-                        getTestString("src/test/resources/expected_additionally_stylish")
+                        "src/test/resources/expected_additionally_stylish"
                 ),
                 Arguments.of(FILE3,
                         FILE4,
                         "stylish",
-                        getTestString("src/test/resources/expected_basic_stylish")
+                        "src/test/resources/expected_basic_stylish"
                 ),
                 Arguments.of(FILE7,
                         FILE8,
                         "stylish",
-                        getTestString("src/test/resources/expected_additionally_yaml_stylish")
+                        "src/test/resources/expected_additionally_yaml_stylish"
                 ),
                 Arguments.of(FILE3,
                         FILE4,
                         "json",
-                        getTestString("src/test/resources/expected_basic_json")
+                        "src/test/resources/expected_basic_json"
                 )
         );
     }
@@ -111,7 +114,7 @@ class AppTest {
         return Stream.of(
                 Arguments.of(FILE1,
                         FILE2,
-                        getTestString("src/test/resources/expected_basic_stylish")
+                        "src/test/resources/expected_basic_stylish"
                 )
         );
     }

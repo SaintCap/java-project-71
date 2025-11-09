@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.gendiff;
 
 import java.util.List;
 import java.util.Map;
@@ -6,13 +6,12 @@ import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import hexlet.code.gendiff.Parser;
-import hexlet.code.gendiff.Processor;
+import hexlet.code.gendiff.formatters.FormatterFactory;
 import hexlet.code.gendiff.utils.FileInfo;
 import hexlet.code.gendiff.utils.KeyComparisonResult;
 
 public class Differ {
-    private static final String FORMAT = "stylish";
+    private static final String STYLISH_FORMAT = "stylish";
 
     /**
      * Generates a formatted comparison report by processing and comparing data from two files.
@@ -25,7 +24,7 @@ public class Differ {
      * @return a string containing the comparison result in the requested format
      * @throws Exception if file reading, parsing, or processing fails
      * @see Parser
-     * @see Processor
+     * @see FormatterFactory
      */
     public static String generate(String filePath1, String filePath2, String format) throws Exception {
 
@@ -33,13 +32,13 @@ public class Differ {
         var fileInfo2 = new FileInfo(filePath2);
 
         var parser = new Parser();
-
         var data1 = parser.parse(fileInfo1);
         var data2 = parser.parse(fileInfo2);
 
         var compareResult = compareData(data1, data2);
 
-        return Processor.process(format, compareResult);
+        var formatter = FormatterFactory.create(format);
+        return formatter.format(compareResult);
     }
 
     /**
@@ -52,21 +51,10 @@ public class Differ {
      * @return a string containing the comparison result in the requested format
      * @throws Exception if file reading, parsing, or processing fails
      * @see Parser
-     * @see Processor
+     * @see FormatterFactory
      */
     public static String generate(String filePath1, String filePath2) throws Exception {
-
-        var fileInfo1 = new FileInfo(filePath1);
-        var fileInfo2 = new FileInfo(filePath2);
-
-        var parser = new Parser();
-
-        var data1 = parser.parse(fileInfo1);
-        var data2 = parser.parse(fileInfo2);
-
-        var compareResult = compareData(data1, data2);
-
-        return Processor.process(FORMAT, compareResult);
+        return generate(filePath1, filePath2, STYLISH_FORMAT);
     }
 
     private static List<KeyComparisonResult> compareData(Map<String, Object> data1, Map<String, Object> data2) {
