@@ -1,8 +1,6 @@
 package hexlet.code;
 
-import hexlet.code.mappers.JSONFileMapper;
-import hexlet.code.mappers.Mapper;
-import hexlet.code.mappers.YAMLFileMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 import hexlet.code.utils.FileInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -47,18 +45,10 @@ class AppTest {
     @ParameterizedTest
     @MethodSource("provideTestDataParser")
     void testParser(String file, Map<String, Object> expect) throws Exception {
-        var parser = new Parser();
         var fileInfo = new FileInfo(file);
-        var actual = parser.parse(fileInfo);
-
-        assertEquals(expect, actual);
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideTestDataMapper")
-    void testMappers(String file, Mapper mapper, Map<String, Object> expect) throws Exception {
-        var fileInfo = new FileInfo(file);
-        var actual = mapper.parse(fileInfo.getFilePath());
+        var content1 = Files.readString(fileInfo.getFilePath());
+        var mapperFile = Parser.getMapper(fileInfo.getExt());
+        var actual = mapperFile.readValue(content1, new TypeReference<Map<String, Object>>() { });
 
         assertEquals(expect, actual);
     }
@@ -123,19 +113,6 @@ class AppTest {
                         testParseResult()
                 ),
                 Arguments.of(FILE3,
-                        testParseResult()
-                )
-        );
-    }
-
-    private static Stream<Arguments> provideTestDataMapper() throws IOException {
-        return Stream.of(
-                Arguments.of(FILE1,
-                        new JSONFileMapper(),
-                        testParseResult()
-                ),
-                Arguments.of(FILE3,
-                        new YAMLFileMapper(),
                         testParseResult()
                 )
         );

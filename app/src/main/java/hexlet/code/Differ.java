@@ -1,11 +1,13 @@
 package hexlet.code;
 
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import hexlet.code.formatters.FormatterFactory;
 import hexlet.code.utils.FileInfo;
 import hexlet.code.utils.KeyComparisonResult;
@@ -31,9 +33,14 @@ public class Differ {
         var fileInfo1 = new FileInfo(filePath1);
         var fileInfo2 = new FileInfo(filePath2);
 
-        var parser = new Parser();
-        var data1 = parser.parse(fileInfo1);
-        var data2 = parser.parse(fileInfo2);
+        var content1 = Files.readString(fileInfo1.getFilePath());
+        var content2 = Files.readString(fileInfo2.getFilePath());
+
+        var mapperFile1 = Parser.getMapper(fileInfo1.getExt());
+        var data1 = mapperFile1.readValue(content1, new TypeReference<Map<String, Object>>() { });
+
+        var mapperFile2 = Parser.getMapper(fileInfo2.getExt());
+        var data2 = mapperFile2.readValue(content2, new TypeReference<Map<String, Object>>() { });
 
         var compareResult = compareData(data1, data2);
 

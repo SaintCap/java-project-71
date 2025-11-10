@@ -1,38 +1,16 @@
 package hexlet.code;
 
-import hexlet.code.mappers.JSONFileMapper;
-import hexlet.code.mappers.Mapper;
-import hexlet.code.mappers.YAMLFileMapper;
-import hexlet.code.utils.FileInfo;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class Parser {
-    private final List<Mapper> parsers  = new ArrayList<>();
 
-    public Parser() {
-        fileParserRegistry();
-    }
-
-    public Map<String, Object> parse(FileInfo fileInfo) throws IOException {
-        Mapper mapper = getParser(fileInfo.getExt());
-        return mapper.parse(fileInfo.getFilePath());
-    }
-
-    private Mapper getParser(String extension) throws IOException {
-        return parsers.stream()
-                .filter(parser -> parser.supports(extension))
-                .findFirst()
-                .orElseThrow(() -> new IOException(
-                        "Unsupported file format: " + extension));
-    }
-
-    private void fileParserRegistry() {
-        parsers.add(new JSONFileMapper());
-        parsers.add(new YAMLFileMapper());
+    public static ObjectMapper getMapper(String extension) {
+        return switch (extension) {
+                case "json" -> new ObjectMapper();
+                case "yaml", "yml" -> new YAMLMapper();
+                default -> throw new RuntimeException("Unsupported file extension: " + extension);
+        };
     }
 
 }
